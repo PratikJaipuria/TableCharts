@@ -1,0 +1,112 @@
+/*charts.html*/
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+<body>
+<a href="{% url 'auth_logout' %}">LogOut</a>
+
+{% if request.user.is_authenticated and request.user.is_staff %}
+<div id="chart_container" style="width:100%; height:400px;"></div>
+{% elif request.user.is_authenticated %}
+<!--<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>-->
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<table id="datatable">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Jane</th>
+            <th>John</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Apples</th>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <th>Pears</th>
+            <td>2</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <th>Plums</th>
+            <td>5</td>
+            <td>11</td>
+        </tr>
+        <tr>
+            <th>Bananas</th>
+            <td>1</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <th>Oranges</th>
+            <td>2</td>
+            <td>4</td>
+        </tr>
+{% endif %}
+
+
+<script>
+$(function () {
+$('#chart_container').highcharts({
+chart: {
+type: 'bar'
+},
+title: {
+text: 'Monthly Sales'
+},
+xAxis: {
+categories: ['Jan', 'Feb', 'Mar','Apr']
+},
+yAxis: {
+title: {
+text: 'numbers'
+}
+},
+series: [{
+name: 'John',
+data: [1, 0, 4]
+}, {
+name: 'King',
+data: [5, 7, 3]
+}]
+});
+});
+</script>
+
+<script>
+Highcharts.chart('container', {
+    data: {
+        table: 'datatable'
+    },
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Data extracted from a HTML table in the page'
+    },
+    yAxis: {
+        allowDecimals: false,
+        title: {
+            text: 'Units'
+        }
+    },
+    tooltip: {
+        formatter: function () {
+            return '<b>' + this.series.name + '</b><br/>' +
+                this.point.y + ' ' + this.point.name.toLowerCase();
+        }
+    }
+});
+
+</script>
+</body>
+</html>
