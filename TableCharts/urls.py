@@ -6,6 +6,7 @@ urlpatterns = [
     # url(r'^$', 'TableCharts.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    url(r'^$','app.views.charts',name='charts'),
     url(r'^app/','app.views.index',name='index'),
     url(r'^charts/','app.views.charts',name='charts'),
     url(r'^accounts/',include('registration.backends.default.urls')),
